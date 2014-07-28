@@ -13,14 +13,8 @@
  */
 package org.openmrs.module.emrapi.encounter.domain;
 
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
-import org.openmrs.TestOrder;
-import org.openmrs.module.emrapi.encounter.builder.TestOrderBuilder;
 
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
@@ -33,4 +27,24 @@ public class EncounterTransactionTest {
         encounterTransaction.setEncounterDateTime(new Date(2013, 10, 30, 0, 0, 0));
         assertEquals(new Date(2013, 10, 30, 0, 0, 0), encounterTransaction.getEncounterDateTime());
     }
+
+    @Test
+    public void shouldSetCurrentDateIfDispositionDateIsNull() throws Exception {
+        EncounterTransaction.Disposition disposition = new EncounterTransaction.Disposition();
+        disposition.setDispositionDateTime(null);
+        assertEquals(new Date(), disposition.getDispositionDateTime());
+    }
+    @Test
+    public void shouldSetCurrentDateIfObservationDateIsNull() throws Exception {
+        EncounterTransaction.Observation observation = new EncounterTransaction.Observation();
+        observation.setObservationDateTime(null);
+        assertEquals(new Date(), observation.getObservationDateTime());
+    }
+    @Test
+    public void shouldSetCurrentDateIfDiagnosisDateIsNull() throws Exception {
+        EncounterTransaction.Diagnosis diagnosis = new EncounterTransaction.Diagnosis();
+        diagnosis.setDiagnosisDateTime(null);
+        assertEquals(new Date(), diagnosis.getDiagnosisDateTime());
+    }
+
 }

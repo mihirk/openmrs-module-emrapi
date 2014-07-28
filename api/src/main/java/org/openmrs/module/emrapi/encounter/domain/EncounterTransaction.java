@@ -18,11 +18,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.openmrs.module.emrapi.utils.CustomJsonDateSerializer;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EncounterTransaction {
@@ -182,7 +178,7 @@ public class EncounterTransaction {
         private String dataType;
         private boolean isSet;
         private String shortName;
-        @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
+        @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
         private String units;
         private String conceptClass;
 
@@ -204,11 +200,11 @@ public class EncounterTransaction {
         }
 
         public Concept(String uuid, String name) {
-            this (uuid, name, false);
+            this(uuid, name, false);
         }
 
         public Concept(String uuid) {
-            this (uuid, null, false);
+            this(uuid, null, false);
         }
 
         public String getUuid() {
@@ -361,7 +357,7 @@ public class EncounterTransaction {
         }
 
         public Observation setObservationDateTime(Date observationDateTime) {
-            this.observationDateTime = observationDateTime;
+            this.observationDateTime = (observationDateTime != null) ? observationDateTime : new Date();
             return this;
         }
 
@@ -372,7 +368,7 @@ public class EncounterTransaction {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Disposition{
+    public static class Disposition {
         private String code;
         private String conceptName;
         private String existingObs;
@@ -438,17 +434,9 @@ public class EncounterTransaction {
         }
 
         public void setDispositionDateTime(Date date) {
-            this.dispositionDateTime = date;
+            this.dispositionDateTime = (date != null) ? date : new Date();
         }
 
-      /*  public String getDispositionNote() {
-            return dispositionNote;
-        }
-
-        public Disposition setDispositionNote(String dispositionNote) {
-            this.dispositionNote = dispositionNote;
-            return this;
-        }*/
 
         public String getConceptName() {
             return conceptName;
@@ -551,7 +539,6 @@ public class EncounterTransaction {
     }
 
 
-
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Diagnosis {
         private String order;
@@ -615,7 +602,7 @@ public class EncounterTransaction {
         }
 
         public void setDiagnosisDateTime(Date date) {
-            this.diagnosisDateTime = date;
+            this.diagnosisDateTime = (date != null) ? date : new Date();
         }
 
         public boolean isVoided() {
@@ -650,7 +637,7 @@ public class EncounterTransaction {
         private Concept concept;
         private String notes;
         private Date startDate;
-        private Date  endDate;
+        private Date endDate;
         private Double numberPerDosage;
         private Concept dosageInstruction;
         private Concept dosageFrequency;
@@ -719,7 +706,7 @@ public class EncounterTransaction {
 
         @JsonIgnore
         public String getDosageFrequencyUuid() {
-            return dosageFrequency == null ?  null : dosageFrequency.getUuid();
+            return dosageFrequency == null ? null : dosageFrequency.getUuid();
         }
 
         public boolean isPrn() {
